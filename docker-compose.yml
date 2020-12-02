@@ -1,0 +1,89 @@
+version: '3.8'
+services:
+
+    # nginx
+    nginx-service:
+        build:
+            context: docker/nginx
+            dockerfile: Dockerfile
+        container_name: p4-webserver
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./project:/var/www/html
+            - ./project/storage/logs/nginx:/var/log/nginx
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+            - ./docker/nginx/conf.d/gzip.conf:/etc/nginx/conf.d/gzip.conf
+            - ./docker/nginx/certs:/etc/ssl/certs
+            - ./docker/nginx/sites-enabled:/etc/nginx/sites-enabled
+            - ./docker/nginx/snippets:/etc/nginx/snippets
+            - ./docker/nginx/templates:/etc/nginx/templates
+        env_file:
+            - .nginx.env
+        depends_on:
+            - app-service
+            - composer-service
+            - mariadb-service
+        networks:
+            - backend
+
+    # php
+    app-service:
+        build:
+            context: docker
+            dockerfile: php/Dockerfile
+        container_name: p4-app
+        env_file:
+            - .php.env
+        ports:
+            - 9000:9000
+        volumes:
+            - ./project:/var/www/html:cached
+            - ~/composer:/root/.composer
+        networks:
+            - backend
+
+    # composer
+    composer-service:
+        image: composer/composer:latest
+        container_name: p4-composer
+        volumes:
+            - ./project:/app
+        working_dir: /app
+        command: install --ignore-platform-reqs --no-scripts
+        networks:
+            - backend
+
+    # mysql (mariadb)
+    mariadb-service:
+        image: mariadb:latest
+        container_name: p4-mariadb
+        ports:
+            - 3307:3306
+        volumes:
+            - ./docker/mysql/cnf:/etc/mysql/conf.d
+            - ./docker/mysql/database:/var/lib/mysql
+            - ./docker/mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        restart: always
+        env_file:
+            - .sql.env
+        networks:
+            - backend
+
+    # mailhog
+    # frontend: http://localhost:8025
+    # api: http://localhost:8025/api/v2/messages (json response)
+    mailhog-service:
+        image: mailhog/mailhog:latest
+        container_name: p4-mailhog
+        restart: unless-stopped
+        ports:
+            - 1025:1025
+            - 8025:8025
+        networks:
+            - backend
+
+networks:
+    backend:

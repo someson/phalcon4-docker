@@ -1,0 +1,13 @@
+Thumbs.db
+.DS_Store
+.project
+.metadata
+.codeintel
+.idea
+i.php
+/vendor
+node_modules/
+tests/_output/*
+ide/
+!/.env
+/storage/*
