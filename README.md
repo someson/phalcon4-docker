@@ -17,7 +17,7 @@ $ docker-compose up -d --build
 $ docker-compose run --rm composer-service composer update --ignore-platform-reqs --no-scripts
 ```
 
-- run tests:
+### Tests
 
 ```sh
 $ docker exec -it p4-app ./vendor/bin/codecept run
@@ -26,3 +26,17 @@ or (equal)
 ```sh
 $ docker-compose exec app-service ./vendor/bin/codecept run
 ```
+
+### Devtools
+
+```sh
+$ docker-compose exec app-service phalcon serve
+```
+
+or "detached":
+
+```sh
+$ docker-compose exec -d app-service phalcon serve
+```
+
+url: [http://phalcon4.test:8000/webtools.php](http://phalcon4.test:8000/webtools.php)

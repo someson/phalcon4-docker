@@ -34,26 +34,35 @@ RUN set -xe \
     && docker-php-source delete \
     && rm -rf /tmp/* /var/cache/apk/*
 
-RUN set -xe && \
-        curl -LO https://github.com/jbboehr/php-psr/archive/v${PSR_VERSION}.tar.gz && \
-        tar xzf ${PWD}/v${PSR_VERSION}.tar.gz && \
-        curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz && \
-        tar xzf ${PWD}/v${PHALCON_VERSION}.tar.gz && \
-        docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) \
-            ${PWD}/php-psr-${PSR_VERSION} \
-            ${PWD}/cphalcon-${PHALCON_VERSION}/build/${PHALCON_EXT_PATH} \
-        && rm -r \
-            ${PWD}/v${PSR_VERSION}.tar.gz \
-            ${PWD}/php-psr-${PSR_VERSION} \
-            ${PWD}/v${PHALCON_VERSION}.tar.gz \
-            ${PWD}/cphalcon-${PHALCON_VERSION} \
-        && php -m
-
 RUN set -xe \
-    curl -LOs https://github.com/phalcon/phalcon-devtools/releases/download/v${DEVTOLLS_VERSION}/phalcon.phar \
-    chmod +x phalcon.phar \
-    mv phalcon.phar /usr/local/bin/phalcon \
-    phalcon --version
+    && curl -LO https://github.com/jbboehr/php-psr/archive/v${PSR_VERSION}.tar.gz \
+    && tar xzf ${PWD}/v${PSR_VERSION}.tar.gz \
+    && curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz \
+    && tar xzf ${PWD}/v${PHALCON_VERSION}.tar.gz \
+    && docker-php-ext-install -j $(getconf _NPROCESSORS_ONLN) \
+        ${PWD}/php-psr-${PSR_VERSION} \
+        ${PWD}/cphalcon-${PHALCON_VERSION}/build/${PHALCON_EXT_PATH} \
+    && rm -r \
+        ${PWD}/v${PSR_VERSION}.tar.gz \
+        ${PWD}/php-psr-${PSR_VERSION} \
+        ${PWD}/v${PHALCON_VERSION}.tar.gz \
+        ${PWD}/cphalcon-${PHALCON_VERSION} \
+    && php -m
+
+# phalcon devtools has some issues currently:
+# https://github.com/phalcon/phalcon-devtools/issues/1431
+# https://github.com/phalcon/phalcon-devtools/issues/1378
+# we need update the package with "composer update". Remove composer from container after issues are fixed
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN set -xe \
+    && curl -LO https://github.com/phalcon/phalcon-devtools/archive/v${DEVTOLLS_VERSION}.tar.gz \
+    && tar xzf v${DEVTOLLS_VERSION}.tar.gz \
+    && rm -rf v${DEVTOLLS_VERSION}.tar.gz \
+    && mv phalcon-devtools-${DEVTOLLS_VERSION} /usr/src/phalcon-devtools \
+    && ln -sf /usr/src/phalcon-devtools/phalcon /usr/local/bin/phalcon \
+    && cd /usr/src/phalcon-devtools \
+    && composer update --ignore-platform-reqs \
+    && phalcon --version
 
 COPY php/php.ini /usr/local/etc/php/conf.d/php-override.ini
 COPY fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
