@@ -2,7 +2,8 @@
 
 namespace App\Modules\Frontend\Controllers;
 
-use App\Version;
+use Phalcon\Db\Enum;
+use Phalcon\Version;
 
 class IndexController extends ControllerBase
 {
@@ -16,7 +17,7 @@ class IndexController extends ControllerBase
         /** @var \Phalcon\Db\Result\Pdo $query */
         $query = $db->query("SHOW VARIABLES LIKE '%version%'");
         $mysqlVersion = '?';
-        foreach ($result = $query->fetchAll(\Phalcon\Db\Enum::FETCH_ASSOC) as $item) {
+        foreach ($result = $query->fetchAll(Enum::FETCH_ASSOC) as $item) {
             if ($item['Variable_name'] === 'version') {
                 $mysqlVersion = $item['Value'];
                 break;
@@ -24,9 +25,9 @@ class IndexController extends ControllerBase
         }
         $css->addCss('/assets/libs/bootstrap/css/bootstrap.min.css');
         $this->view->setVars([
-            'frameworkVersion' => \Phalcon\Version::get(),
+            'frameworkVersion' => Version::get(),
             'mysqlVersion' => $mysqlVersion,
-            'webServerVersion' => $_SERVER['SERVER_SOFTWARE'] ?? '?',
+            'webServerVersion' => isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] . ' + ssl + http2' : '?',
             'phpVersion' => $_SERVER['PHP_VERSION'] ?? '?',
         ]);
     }

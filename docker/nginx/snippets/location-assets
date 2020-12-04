@@ -17,3 +17,69 @@ location ~* ^/assets/(css|docs|fonts|images|js|min|scss|libs)/(.+)$ {
     access_log off;
     error_log off;
 }
+
+location ~* \.svgz$ {
+    gzip off;
+    add_header Content-Encoding gzip;
+
+    # Prevent some browsers from MIME-sniffing the response.
+    #
+    # This reduces exposure to drive-by download attacks and cross-origin data
+    # leaks, and should be left uncommented, especially if the server is serving
+    # user-uploaded content or content that could potentially be treated as
+    # executable by the browser.
+    #
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+    # https://blogs.msdn.microsoft.com/ie/2008/07/02/ie8-security-part-v-comprehensive-protection/
+    # https://mimesniff.spec.whatwg.org
+    add_header X-Content-Type-Options nosniff always;
+
+    # Mitigate the risk of cross-site scripting and other content-injection
+    # attacks.
+    #
+    # This can be done by setting a `Content Security Policy` which whitelists
+    # trusted sources of content for your website.
+    #
+    # There is no policy that fits all websites, you will have to modify the
+    # `Content-Security-Policy` directives in the example depending on your needs.
+    #
+    # To make your CSP implementation easier, you can use an online CSP header
+    # generator such as:
+    # https://report-uri.com/home/generate/
+    #
+    # It is encouraged that you validate your CSP header using a CSP validator
+    # such as:
+    # https://csp-evaluator.withgoogle.com
+    #
+    # https://csp.withgoogle.com/docs/
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+    # https://www.html5rocks.com/en/tutorials/security/content-security-policy/
+    # https://www.w3.org/TR/CSP/
+    add_header Content-Security-Policy $content_security_policy always;
+
+    # Set a strict Referrer Policy to mitigate information leakage.
+    #
+    # (1) The `Referrer-Policy` header is included in responses for resources
+    #     that are able to request (or navigate to) other resources.
+    #
+    #     This includes the commonly used resource types:
+    #     HTML, CSS, XML/SVG, PDF documents, scripts and workers.
+    #
+    # To prevent referrer leakage entirely, specify the `no-referrer` value
+    # instead. Note that the effect could impact analytics metrics negatively.
+    #
+    # To check your Referrer Policy, you can use an online service, such as:
+    # https://securityheaders.com/
+    # https://observatory.mozilla.org/
+    #
+    # https://scotthelme.co.uk/a-new-security-header-referrer-policy/
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
+    add_header Referrer-Policy $referrer_policy always;
+
+    # Allow cross-origin requests.
+    #
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
+    # https://enable-cors.org/
+    # https://www.w3.org/TR/cors/
+    add_header Access-Control-Allow-Origin $cors;
+}
