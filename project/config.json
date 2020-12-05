@@ -1,0 +1,14 @@
+{
+  "migration" : {
+    "migrations": "storage/migrations",
+    "config": "app/Config/config.php"
+  },
+  "model" : {
+    "namespace": "App\\Shared\\Models\\Base",
+    "extends": "\\Library\\Models\\ModelBase"
+  },
+  "all-models" : {
+    "namespace": "App\\Shared\\Models\\Base",
+    "extends": "\\Library\\Models\\ModelBase"
+  }
+}

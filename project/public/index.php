@@ -4,7 +4,6 @@ set_time_limit(0);
 error_reporting(E_ALL);
 
 $dir = dirname(__DIR__);
-ini_set('error_log', $dir . '/storage/logs/php.log');
 
 require_once $dir . '/app/Constants.php';
 require_once $dir . '/app/Functions.php';

@@ -7,7 +7,7 @@ if (! function_exists('env')) {
 }
 
 if (! function_exists('__')) {
-    function __($key = null, array $params = []) {
+    function __($key = null, array $params = []): string {
         return $key ? \App\Translator::instance()->translate($key, $params) : '[TRANSLATION FAILED]';
     }
 }

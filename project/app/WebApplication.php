@@ -42,7 +42,7 @@ class WebApplication extends Application
         ];
     }
 
-    public function registerServices(Di $di)
+    public function registerServices(Di $di): void
     {
         foreach ($this->getProviders() as $provider) {
             $di->register(new $provider());

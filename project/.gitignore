@@ -11,4 +11,5 @@ tests/_output/*
 ide/
 !/.env
 /storage/*
+!/storage/migrations
 /.phalcon/*
