@@ -1,6 +1,6 @@
 <?php
 
-defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: dirname(__DIR__, 2));
+defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: dirname(__DIR__));
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 defined('PUBLIC_PATH') || define('PUBLIC_PATH', BASE_PATH . '/public');
 

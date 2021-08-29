@@ -2,14 +2,14 @@
 
 namespace App\Shared\Listeners;
 
-use Phalcon\Events\Event;
-use Phalcon\Di\Injectable;
 use Library\Mvc\Dispatcher;
 use Library\Http\Response\StatusCode as Status;
+use Phalcon\Events\Event;
+use Phalcon\Di\Injectable;
 
 class HttpMethodListener extends Injectable
 {
-    public function beforeDispatch(Event $event, Dispatcher $dispatcher)
+    public function beforeDispatch(Event $event, Dispatcher $dispatcher): bool
     {
         $allowedMethods = ['HEAD','GET','POST'];
         if (! \in_array($this->request->getMethod(), $allowedMethods, true)) {
@@ -21,6 +21,6 @@ class HttpMethodListener extends Injectable
             $event->stop();
         }
 
-        return !$event->isStopped();
+        return ! $event->isStopped();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Modules\Frontend\Controllers;
 
 use Phalcon\Db\Enum;
+use Phalcon\Db\Result\Pdo;
 use Phalcon\Version;
 
 class IndexController extends ControllerBase
@@ -14,7 +15,7 @@ class IndexController extends ControllerBase
 
         /** @var  $db */
         $db = $this->getDI()->getShared('db');
-        /** @var \Phalcon\Db\Result\Pdo $query */
+        /** @var Pdo $query */
         $query = $db->query("SHOW VARIABLES LIKE '%version%'");
         $mysqlVersion = '?';
         foreach ($result = $query->fetchAll(Enum::FETCH_ASSOC) as $item) {

@@ -2,10 +2,10 @@
 
 namespace App\Shared\Listeners;
 
-use Phalcon\Events\Event;
-use Phalcon\Dispatcher\Exception as DispatchException;
-use Library\Mvc\Dispatcher;
 use Library\Env;
+use Library\Mvc\Dispatcher;
+use Phalcon\Dispatcher\Exception as DispatchException;
+use Phalcon\Events\Event;
 
 class ErrorListener
 {

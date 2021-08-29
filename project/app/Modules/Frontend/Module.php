@@ -2,10 +2,10 @@
 
 namespace App\Modules\Frontend;
 
+use App\Shared\Listeners\{ ErrorListener, HttpMethodListener };
+use Library\Mvc\Dispatcher;
 use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\ModuleDefinitionInterface;
-use Library\Mvc\Dispatcher;
-use App\Shared\Listeners\{ ErrorListener, HttpMethodListener };
 
 class Module implements ModuleDefinitionInterface
 {

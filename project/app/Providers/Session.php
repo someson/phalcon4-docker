@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
+use Library\Session\Adapter\Mysql;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Session\Manager;
-use Library\Session\Adapter\Mysql;
 
 class Session implements ServiceProviderInterface
 {

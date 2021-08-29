@@ -17,7 +17,7 @@ class Notification implements \JsonSerializable
      * @param bool $type
      * @param array|string $message
      */
-    private function __construct($type, $message)
+    private function __construct(bool $type, $message)
     {
         $this->_status = $type;
         $this->_collection = ['success' => $this->_status];
@@ -32,7 +32,7 @@ class Notification implements \JsonSerializable
      * @param null $message
      * @return static
      */
-    public static function success($message = null): self
+    public static function success($message = null): Notification
     {
         return new static(self::SUCCESS, $message);
     }
@@ -41,7 +41,7 @@ class Notification implements \JsonSerializable
      * @param null $message
      * @return static
      */
-    public static function failure($message = null): self
+    public static function failure($message = null): Notification
     {
         return new static(self::FAILURE, $message);
     }
@@ -52,7 +52,7 @@ class Notification implements \JsonSerializable
      * @return $this
      * @example Notification::success('Ok')->with(['status' => $httpCode]);
      */
-    public function with(array $data, $replace = false): self
+    public function with(array $data, bool $replace = false): self
     {
         if ($replace) {
             $this->_collection = array_merge($this->_collection, $data);

@@ -1,10 +1,10 @@
 FROM php:7.4-fpm-alpine
 
-ENV PHALCON_VERSION=4.1.0 \
+ENV PHALCON_VERSION=4.1.2 \
     PHALCON_EXT_PATH=php7/64bits \
-    PSR_VERSION=1.0.1 \
-    APCU_VERSION=5.1.19 \
-    DEVTOLLS_VERSION=4.0.3
+    PSR_VERSION=1.1.0 \
+    APCU_VERSION=5.1.20
+#    DEVTOLLS_VERSION=4.0.3
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 COPY php/cert/cacert.pem /usr/local/share/ca-certificates/cacert.pem
@@ -53,16 +53,16 @@ RUN set -xe \
 # https://github.com/phalcon/phalcon-devtools/issues/1431
 # https://github.com/phalcon/phalcon-devtools/issues/1378
 # we need update the package with "composer update". Remove composer from container after issues are fixed
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN set -xe \
-    && curl -LO https://github.com/phalcon/phalcon-devtools/archive/v${DEVTOLLS_VERSION}.tar.gz \
-    && tar xzf v${DEVTOLLS_VERSION}.tar.gz \
-    && rm -rf v${DEVTOLLS_VERSION}.tar.gz \
-    && mv phalcon-devtools-${DEVTOLLS_VERSION} /usr/src/phalcon-devtools \
-    && ln -sf /usr/src/phalcon-devtools/phalcon /usr/local/bin/phalcon \
-    && cd /usr/src/phalcon-devtools \
-    && composer update --ignore-platform-reqs \
-    && phalcon --version
+#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+#RUN set -xe \
+#    && curl -LO https://github.com/phalcon/phalcon-devtools/archive/v${DEVTOLLS_VERSION}.tar.gz \
+#    && tar xzf v${DEVTOLLS_VERSION}.tar.gz \
+#    && rm -rf v${DEVTOLLS_VERSION}.tar.gz \
+#    && mv phalcon-devtools-${DEVTOLLS_VERSION} /usr/src/phalcon-devtools \
+#    && ln -sf /usr/src/phalcon-devtools/phalcon /usr/local/bin/phalcon \
+#    && cd /usr/src/phalcon-devtools \
+#    && composer update --ignore-platform-reqs \
+#    && phalcon --version
 
 COPY php/php.ini /usr/local/etc/php/conf.d/php-override.ini
 COPY fpm/php-fpm.conf /usr/local/etc/php-fpm.conf

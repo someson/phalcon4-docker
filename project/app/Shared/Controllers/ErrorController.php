@@ -2,15 +2,17 @@
 
 namespace App\Shared\Controllers;
 
-use Phalcon\Mvc\View;
 use Library\Http\Response\StatusCode as Status;
+use Library\Mvc\Dispatcher;
+use Phalcon\Config;
+use Phalcon\Mvc\View;
 
 /**
  * Class ErrorController
  * @package App\Shared\Controllers
  *
- * @property \Library\Mvc\Dispatcher dispatcher
- * @property \Phalcon\Config config
+ * @property Dispatcher dispatcher
+ * @property Config config
  */
 class ErrorController extends ControllerBase
 {
@@ -35,24 +37,24 @@ class ErrorController extends ControllerBase
         ]);
     }
 
-    public function badRequestAction()
+    public function badRequestAction(): void
     {
         $this->prepareErrorTemplate(Status::BAD_REQUEST, Status::message(Status::BAD_REQUEST));
     }
 
-    public function notFoundAction()
+    public function notFoundAction(): void
     {
         $this->prepareErrorTemplate(Status::NOT_FOUND, Status::message(Status::NOT_FOUND));
     }
 
-    public function internalServerErrorAction()
+    public function internalServerErrorAction(): void
     {
         $this->prepareErrorTemplate(
             Status::INTERNAL_SERVER_ERROR, Status::message(Status::INTERNAL_SERVER_ERROR)
         );
     }
 
-    public function unknownErrorAction()
+    public function unknownErrorAction(): void
     {
         $this->dispatcher->forward([
             'controller' => 'error',

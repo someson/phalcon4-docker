@@ -8,8 +8,8 @@ services:
             dockerfile: Dockerfile
         container_name: p4-webserver
         ports:
-            - 80:80
-            - 443:443
+            - "80:80"
+            - "443:443"
         volumes:
             - ./project:/var/www/html
             - ./project/storage/logs/nginx:/var/log/nginx:delegated
@@ -38,8 +38,8 @@ services:
         env_file:
             - .php.env
         ports:
-            - 9000:9000
-            - 8000:8000 # phalcon webtools as a php webserver
+            - "9000:9000"
+            - "8000:8000" # phalcon webtools as a php webserver
         volumes:
             - ./project:/var/www/html:cached
             - ~/composer:/root/.composer
@@ -62,7 +62,7 @@ services:
         image: mariadb:latest
         container_name: p4-mariadb
         ports:
-            - 3307:3306
+            - "3307:3306"
         volumes:
             - ./docker/mysql/cnf:/etc/mysql/conf.d
             - ./docker/mysql/database:/var/lib/mysql
@@ -81,8 +81,8 @@ services:
         container_name: p4-mailhog
         restart: unless-stopped
         ports:
-            - 1025:1025
-            - 8025:8025
+            - "1025:1025"
+            - "8025:8025"
         networks:
             - backend
 

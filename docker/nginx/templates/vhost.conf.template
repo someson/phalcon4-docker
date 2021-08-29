@@ -37,6 +37,10 @@ server {
         fastcgi_busy_buffers_size 256k;
     }
 
+    # location /webtools.php {
+    #   try_files $uri $uri/ /webtools.php?$args;
+    # }
+
     include /etc/nginx/snippets/location-assets;
     include /etc/nginx/snippets/location-dot;
     include /etc/nginx/snippets/headers;

@@ -1,6 +1,6 @@
 <?php
 
-define('DS', DIRECTORY_SEPARATOR);
+const DS = DIRECTORY_SEPARATOR;
 
 defined('BASE_DIR')   || define('BASE_DIR', dirname(__DIR__));
 defined('APP_DIR')    || define('APP_DIR',    BASE_DIR . DS . 'app');     // app
@@ -12,4 +12,4 @@ defined('PUBLIC_DIR') || define('PUBLIC_DIR', BASE_DIR . DS . 'public');  // pub
 defined('TMP_DIR')    || define('TMP_DIR',    BASE_DIR . DS . 'storage'); // storage
 defined('CACHE_DIR')  || define('CACHE_DIR',  TMP_DIR  . DS . 'cache');   // storage/cache
 
-defined('URI') || define('URI', trim($_SERVER['REQUEST_URI'], '/ '));
+defined('URI') || define('URI', rtrim($_SERVER['REQUEST_URI'], '/ '));

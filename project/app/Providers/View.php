@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
+use Library\Env;
+use Library\Mvc\View as ExtendedView;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\View\Engine\Volt;
-use Library\Mvc\View as ExtendedView;
-use Library\Env;
 
 class View implements ServiceProviderInterface
 {

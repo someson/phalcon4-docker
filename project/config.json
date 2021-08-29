@@ -1,7 +1,7 @@
 {
   "migration" : {
     "migrations": "storage/migrations",
-    "config": "app/Config/config.php"
+    "config": ".phalcon/config.php"
   },
   "model" : {
     "namespace": "App\\Shared\\Models\\Base",

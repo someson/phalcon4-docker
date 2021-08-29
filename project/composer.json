@@ -49,6 +49,7 @@
         "codeception/module-rest": "^1.2",
         "codeception/module-webdriver": "^1.1",
         "codeception/verify": "^0.4",
+        "phalcon/devtools": "^4.2",
         "phalcon/ide-stubs": "^4.1",
         "vlucas/phpdotenv": "^5.2"
     }

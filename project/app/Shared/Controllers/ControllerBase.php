@@ -2,9 +2,11 @@
 
 namespace App\Shared\Controllers;
 
-use Phalcon\Mvc\Controller;
 use Library\Http\Response\StatusCode;
 use Library\Traits\TraitTrackable;
+use Phalcon\Config;
+use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\Router\GroupInterface;
 
 /**
  * Class ControllerBase
@@ -17,14 +19,14 @@ abstract class ControllerBase extends Controller
     public function initialize(): void
     {
         $config = $this->getDI()->getShared('config');
-        /** @var \Phalcon\Config $exclude */
+        /** @var Config $exclude */
         $exclude = $config->path('notrack.exclude', []);
         $this->makeTrackable('notrack', $exclude ? $exclude->toArray() : []);
     }
 
     protected function getModulePrefix(): ?string
     {
-        /** @var \Phalcon\Mvc\Router\GroupInterface $group */
+        /** @var GroupInterface $group */
         $group = $this->router->getMatchedRoute()->getGroup();
         return $group ? trim($group->getPrefix(), ' /') : null;
     }

@@ -3,10 +3,13 @@
 namespace Library\Models;
 
 use Phalcon\Di;
+use Phalcon\Db\Adapter\AdapterInterface;
 use Phalcon\Db\{ Column, RawValue, Exception };
 use Phalcon\Messages\Message;
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Behavior\SoftDelete;
+use Phalcon\Mvc\Model\Manager;
+use Phalcon\Mvc\Model\Query\{ Builder, BuilderInterface };
 
 /**
  * Class ModelBase
@@ -106,7 +109,7 @@ class ModelBase extends Model
     }
 
     /**
-     * @return \Phalcon\Db\Adapter\AdapterInterface
+     * @return AdapterInterface
      */
     public static function getConnection()
     {
@@ -114,7 +117,7 @@ class ModelBase extends Model
     }
 
     /**
-     * @return \Phalcon\Mvc\Model\Manager
+     * @return Manager
      */
     public static function modelsManager()
     {
@@ -122,7 +125,7 @@ class ModelBase extends Model
     }
 
     /**
-     * @return \Phalcon\Mvc\Model\Query\BuilderInterface|\Phalcon\Mvc\Model\Query\Builder
+     * @return BuilderInterface|Builder
      */
     public static function buildQuery()
     {

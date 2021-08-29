@@ -30,13 +30,13 @@ $ docker-compose exec app-service ./vendor/bin/codecept run
 ### Devtools
 
 ```sh
-$ docker-compose exec app-service phalcon serve
+$ docker-compose exec app-service ./vendor/bin/phalcon serve
 ```
 
 or "detached":
 
 ```sh
-$ docker-compose exec -d app-service phalcon serve
+$ docker-compose exec -d app-service ./vendor/bin/phalcon serve
 ```
 
 url: [http://phalcon4.test:8000/webtools.php](http://phalcon4.test:8000/webtools.php)

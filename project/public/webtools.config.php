@@ -43,4 +43,4 @@ defined('APPLICATION_ENV') || define('APPLICATION_ENV', getenv('APPLICATION_ENV'
 /**
  * @const PTOOLSPATH The path to the Phalcon Developers Tools.
  */
-defined('PTOOLSPATH') || define('PTOOLSPATH', '/usr/src/phalcon-devtools');
+defined('PTOOLSPATH') || define('PTOOLSPATH', '/var/www/html/vendor/phalcon/devtools');
