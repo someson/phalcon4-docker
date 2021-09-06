@@ -51,7 +51,7 @@ class Mysql implements \SessionHandlerInterface, \SessionUpdateTimestampHandlerI
      */
     public function gc($maxlifetime): bool
     {
-        $query = 'DELETE FROM session_data WHERE COALESCE(modified_on, created_on) + ? < UNIX_TIMESTAMP()';
+        $query = /** @lang sql */ 'DELETE FROM session_data WHERE COALESCE(modified_on, created_on) + ? < UNIX_TIMESTAMP()';
         return $this->catchableRun($query, [
             $this->options['lifetime'] ?? $maxlifetime ?? (int) ini_get('session.gc_maxlifetime')
         ]);

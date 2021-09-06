@@ -5,14 +5,13 @@ namespace Library\Traits;
 trait TraitFilesystem
 {
     /**
-     * @param string $storageDir
+     * @param string|null $storageDir
      * @return bool
-     * @throws \RuntimeException
      */
     public static function checkOrCreate(?string $storageDir = null): bool
     {
         if (! $storageDir) {
-            new \InvalidArgumentException('Argument [storageDir] must be defined');
+            throw new \InvalidArgumentException('Argument [storageDir] must be defined');
         }
         if (is_writable($storageDir)) {
             return true;
