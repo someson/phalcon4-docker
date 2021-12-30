@@ -11,12 +11,6 @@ $ docker-compose up -d --build
 127.0.0.1 phalcon4.test
 ```
 
-- composer update from the host:
-
-```sh
-$ docker-compose run --rm composer-service composer update --ignore-platform-reqs --no-scripts
-```
-
 ### Tests
 
 ```sh

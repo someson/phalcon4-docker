@@ -1,9 +1,9 @@
-FROM php:7.4-fpm-alpine
+FROM php:7.4-fpm-alpine3.13
 
 ENV PHALCON_VERSION=4.1.2 \
     PHALCON_EXT_PATH=php7/64bits \
-    PSR_VERSION=1.1.0 \
-    APCU_VERSION=5.1.20
+    PSR_VERSION=1.2.0 \
+    APCU_VERSION=5.1.21
 #    DEVTOLLS_VERSION=4.0.3
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
